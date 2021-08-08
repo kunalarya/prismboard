@@ -44,6 +44,8 @@ class Column(SortableMixin):
 class Label(models.Model):
     name = models.CharField(max_length=255)
     color = models.CharField(max_length=7)
+    boards = models.ManyToManyField("Board", related_name="labels")
+    tasks = models.ManyToManyField("Task", related_name="labels")
 
     def __str__(self):
         return self.name
@@ -66,7 +68,6 @@ class Task(SortableMixin, TimeStampedModel):
     priority = models.CharField(
         max_length=1, choices=Priority.choices, default=Priority.MEDIUM
     )
-    labels = models.ManyToManyField(Label, related_name="tasks")
     assignees = models.ManyToManyField(User, related_name="tasks")
     column = SortableForeignKey(Column, related_name="tasks", on_delete=models.CASCADE)
     task_order = models.PositiveIntegerField(default=0, editable=False, db_index=True)

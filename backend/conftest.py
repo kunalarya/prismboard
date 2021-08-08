@@ -1,6 +1,9 @@
 import pytest
 import uuid
+
 from pytest_factoryboy import register
+
+from django.conf import settings
 
 from boards.tests.factories import (
     UserFactory,
@@ -17,6 +20,14 @@ register(ColumnFactory)
 register(TaskFactory)
 register(LabelFactory)
 register(CommentFactory)
+
+
+@pytest.fixture(scope="session")
+def django_db_modify_db_settings(django_db_modify_db_settings):
+    settings.DATABASES["default"] = {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": ":memory:",
+    }
 
 
 @pytest.fixture(autouse=True)
