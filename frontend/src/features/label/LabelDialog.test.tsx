@@ -38,7 +38,7 @@ const docLabel: Label = {
   id: 1,
   name: "Documentation",
   color: "#111fff",
-  board: 1,
+  // board: 1,
 };
 
 it("should not show dialog", async () => {
