@@ -23,10 +23,10 @@ register(CommentFactory)
 
 
 @pytest.fixture(scope="session")
-def django_db_modify_db_settings(django_db_modify_db_settings):
+def django_db_modify_db_settings(tmp_path_factory, django_db_modify_db_settings):
     settings.DATABASES["default"] = {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": ":memory:",
+        "NAME": tmp_path_factory.mktemp("scopeboard-sqlite"),
     }
 
 
